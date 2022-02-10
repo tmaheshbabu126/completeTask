@@ -1,0 +1,76 @@
+
+<div th:fragment="navbar">
+	<Div id="main">
+		<ul class="nav justify-content-end">
+			<!-- <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li> -->
+  			<li class="nav-item"><a class="nav-link" href="/fileSearch">Search</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">GSI</a></li>
+			<li class="nav-item">
+				<!--     <a class="nav-link" href="#" ><%=name%></a> -->
+				<p id="userName" th:inline="text">[[${uName}]]</p>
+			</li>
+			<li class="nav-item" style="padding-top: 10px; padding-right: 10px">
+
+				<form th:action="@{/logout}" method="post" th:hidden="true"
+					name="logoutForm">
+					<input type="submit" value="Logout" />
+				</form> <a id="signout" href="javascript: document.logoutForm.submit()">Signout</a>
+			</li>
+		</ul>
+
+	</Div>
+</div>
+
+
+
+<div th:fragment="search">
+	<div class="container">
+		<div
+			class="row height d-flex justify-content-center align-items-center">
+			<div class="col-md-8">
+				<div class="search">
+					<i class="fa fa-search"></i> <input type="text"
+						class="form-control" placeholder="Search?">
+					<button class="btn btn-primary">Search</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div th:fragment="generate">
+	<div id="middlebox">
+		<h4>Generate Output:</h4>
+		<!-- 	<button type="button" class="btn btn-info">Generate</button> -->
+
+		<a href="/generate"> <input type="button" class="btn btn-info"
+			value="Generate" />
+		</a>
+
+	</div>
+</div>
+
+<div th:fragment="export">
+	<!-- <div id="rightbox">
+		<h4>Export Output:</h4>
+		<button type="button" class="btn btn-secondary" href="http://localhost:8080/download/{fileName:.+}"><a>Export</a></button>
+
+		<a href="/download/"> <input type="button"
+			class="btn btn-secondary" value="Export" />
+		</a>
+
+	</div> -->
+	
+	<form method="GET" th:action="@{/downloadFiles}"
+				
+				>
+				<input type="file" name="files" id="file"
+					onchange="javascript:updateList()" multiple /> <br /> <br />
+				<button type="submit" class="btn btn-primary">Download</button>
+				
+			</form>
+	
+</div>
