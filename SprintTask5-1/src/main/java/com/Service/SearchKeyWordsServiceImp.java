@@ -101,8 +101,8 @@ public class SearchKeyWordsServiceImp implements SearchKeyWordsService{
 			
 		}
 		
-		public SearchKeyWords findByDate(Date dateSearch) {
-			SearchKeyWords s = sRepo.getByDate(dateSearch);
+		public List<SearchKeyWords> findByDate(Date dateSearch) {
+			List<SearchKeyWords> s = sRepo.getByDate(dateSearch);
 			return s;
 			
 		}

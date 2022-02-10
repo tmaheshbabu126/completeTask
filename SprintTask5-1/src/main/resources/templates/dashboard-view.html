@@ -18,20 +18,20 @@
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script th:inline="javascript">
-    var searchesData =  [[${searchesData}]] ;
-   // var dateSearchList = [[${dateSearchList}]];
+  //  var searchesData =  [[${searchesData}]] ;
+    var dateSearchList = [[${dateSearchList}]];
   //  var message = [[${message}]];
   console("in dashboard html and scripting the query data")
    // console.log(dateSearchList);
     
     console.log("The list of filtered date are as follows");
-    //console.log(dateSearchList);
+    console.log(dateSearchList);
 
 </script>
     <script type="text/javascript">
 
     
-    console.log(searchesData);
+ //   console.log(searchesData);
     var result = [];
 
   
@@ -54,19 +54,19 @@
             
      
             
-            	  for(var i in searchesData){
+            	/*  for(var i in searchesData){
                  	delete searchesData[i].id;
                  	console.log("value to single");
                  	console.log(Object.values(searchesData[0]));
                      //result.push([i, searchesData[i]]);
                      result.push(Object.values(searchesData[i]));
                      //data.addRows(result);
-              		 }  
+              		 }  */
             
             
             
             // getting filter by date
-           /*  for(var i in dateSearchList){
+            for(var i in dateSearchList){
             	delete dateSearchList[i].id;
             	console.log("value to single");
             	console.log(Object.values(dateSearchList[0]));
@@ -74,12 +74,13 @@
                 result.push(Object.values(dateSearchList[i]));
                 //data.addRows(result);
                 
-            } */
+            }
           
            
              
            
-            console.log("converted array in dash");
+            console.log("converted array in view");
+            
             console.log(result);
             data.addRows(result);
            
@@ -108,12 +109,12 @@
 
        
        
-<form th:action="@{/dashBoard-view}">
-<input type="date" id="dateSearch" name="dateSearch" th:value="${dateSearch}" required th:name="dateSearch"
+<!-- <form th:action="@{/dashBoard-view}">
+<input type="date" id="dateSearch" name="dateSearch" th:name="dateSearch"
        value="2022-02-08"
        min="2022-01-01" max="2022-12-31" style="margin: .4rem 0;"/> 
-<input type="submit" value="Search"/> 
-</form>
+<input type="submit"/> 
+</form> -->
 
 
 <div id="chart_div"></div> 
@@ -123,8 +124,8 @@
 <!-- <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script> -->
 
 <script th:inline="javascript">
-    var number = [[${number}]];
-    var message = [[${message}]];
+  //  var number = [[${number}]];
+ //  var message = [[${message}]];
 
 </script>
 
