@@ -27,10 +27,10 @@ import com.Service.SearchKeyWordsServiceImp;
 @Controller
 
 public class SearchController {
-	
+
 	@Autowired
 	SearchKeyWordsServiceImp si;
-	
+
 	@Autowired
 	SearchDateImp sdi;
 
@@ -40,39 +40,40 @@ public class SearchController {
 	thymeleafView( @RequestParam String q ,Map<String, Object> model,RedirectAttributes redirectAttributes, HttpServletResponse httpResponse) throws IOException, ParseException {
 
 
-		
-	    System.out.println(q);
-	    
-	    	
-	    	
-			SearchKeyWords s = new SearchKeyWords((long) 0,q,1);//changed from 0 to 1
-			
-	    	
-	    	SearchKeyWords te1= si.addSearch(s);//sending the model obtained from client to service to process, for adding tenant
-			
-	    	int id = si.findByIdKey(q);
-	    	
-	    	System.out.println("the effective search id = "+id);
-	    	
-	    	
-	    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-			   LocalDateTime now = LocalDateTime.now();
-			   String sd = dtf.format(now);
-			  
-			
-					Date date2=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(sd);
-				
-			   System.out.println(dtf.format(now));
-			
-			SearchDate sed= new SearchDate(0,date2,id);
-	    	
-	    	sdi.addDate(sed);
-	    	
-			ResponseEntity<SearchKeyWords> rt=new ResponseEntity<SearchKeyWords>(te1,HttpStatus.OK); //response to client
-			//return rt;
-			
-			httpResponse.sendRedirect("/dashBoard");
-	    
-	   return "redirect:/dashBoard";
+
+		System.out.println(q);
+
+
+
+		SearchKeyWords s = new SearchKeyWords((long) 0,q,1);//changed from 0 to 1
+
+
+		SearchKeyWords te1= si.addSearch(s);//sending the model obtained from client to service to process, for adding tenant
+
+		int id = si.findByIdKey(q);
+
+		System.out.println("the effective search id = "+id);
+
+
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		String sd = dtf.format(now);
+
+
+		Date date2=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(sd);
+
+		System.out.println(dtf.format(now));
+
+		SearchDate sed= new SearchDate(0,date2,id);
+
+		sdi.addDate(sed);
+
+		ResponseEntity<SearchKeyWords> rt=new ResponseEntity<SearchKeyWords>(te1,HttpStatus.OK); //response to client
+		//return rt;
+		System.out.println(rt);
+
+		httpResponse.sendRedirect("/dashBoard");
+
+		return "redirect:/dashBoard";
 	}
 }

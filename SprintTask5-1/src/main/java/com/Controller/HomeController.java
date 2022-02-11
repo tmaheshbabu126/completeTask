@@ -3,23 +3,19 @@ import java.io.File;
 import java.security.Principal;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Configuration.LoginSuccessHandler;
-import com.Service.CustomUserDetails;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-//@RestController
+
 @Controller
-//@ResponseBody
+
 public class HomeController {
 	
 	 
@@ -63,7 +59,8 @@ public class HomeController {
 	        return "admin";
 	    }
 	  
-	  @RequestMapping("/fileSearch")
+	  @SuppressWarnings("unchecked")
+	@RequestMapping("/fileSearch")
 	    public String root(Map<String, Object> model,RedirectAttributes redirectAttributes,Principal principal,Model model1) throws JsonProcessingException{
 		  
 		 // ModelAndView result = new ModelAndView("editor/display");
@@ -94,7 +91,7 @@ public class HomeController {
 	      
 	      ((Map<String, Object>) model1).put("number", children);
 	      ((Map<String, Object>) model1).put("message", "Hello from Spring MVC");
-		 // result.addObject("suggestion", objectMapper.writeValueAsString(children));
+		
 		  
 	        return "index";
 	    }

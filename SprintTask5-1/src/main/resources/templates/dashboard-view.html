@@ -20,6 +20,7 @@
     <script th:inline="javascript">
   //  var searchesData =  [[${searchesData}]] ;
     var dateSearchList = [[${dateSearchList}]];
+    var dateSearch = [[${dateSearch}]];
   //  var message = [[${message}]];
   console("in dashboard html and scripting the query data")
    // console.log(dateSearchList);
@@ -111,7 +112,7 @@
        
 <form  th:action="@{/dashBoard-view}">
 <input type="date" id="dateSearch" name="dateSearch" th:name="dateSearch" 
-       value="2022-02-08"
+       th:value="${dateSearch}"
        min="2022-01-01" max="2022-12-31" style="margin: .4rem 0;"/> 
 <input type="submit"/> 
 </form>

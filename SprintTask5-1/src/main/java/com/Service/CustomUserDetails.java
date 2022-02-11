@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 
+@SuppressWarnings("serial")
 public class CustomUserDetails implements UserDetails {
 
     private Users user;
