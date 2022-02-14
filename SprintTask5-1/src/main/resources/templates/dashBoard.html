@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Google Charts With Thymeleaf</title>
+    <title>Dash Board for Audit</title>
     
      <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -108,10 +108,15 @@
 
        
        
+       	<!-- value="2022-02-08"
+       min="2022-01-01" max="2022-12-31"  -->
+       
 <form th:action="@{/dashBoard-view}">
 <input type="date" id="dateSearch" name="dateSearch" th:value="${dateSearch}" required th:name="dateSearch"
-       value="2022-02-08"
-       min="2022-01-01" max="2022-12-31" style="margin: .4rem 0;"/> 
+  
+ 	
+       
+     style="margin: .4rem 0;"/> 
 <input type="submit" value="Search"/> 
 </form>
 

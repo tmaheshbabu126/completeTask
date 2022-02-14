@@ -48,7 +48,7 @@ public class FileController {
             .stream()
             .forEach(file -> fileService.uploadFile(file));
 
-        redirectAttributes.addFlashAttribute("message",
+        redirectAttributes.addFlashAttribute("upload",
             "You successfully uploaded all files!");
 
         return "redirect:/admin";
@@ -92,12 +92,12 @@ public class FileController {
         boolean success = newFile.createNewFile();
         //InputStreamResource resource = new InputStreamResource(new FileInputStream(newFile));
         if(success) { System.out.println("File created");
-        redirectAttributes.addFlashAttribute("message",
+        redirectAttributes.addFlashAttribute("generate",
                 "You have successfully Exported the file!");
         }
         else {
         	System.out.println("already file exist please remove it if want to create again");
-        	 redirectAttributes.addFlashAttribute("message",
+        	 redirectAttributes.addFlashAttribute("generate",
                      "already file exist please remove it if want to create again");
         }
  

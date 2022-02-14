@@ -2,17 +2,22 @@ plugins {
 	id 'org.springframework.boot' version '2.6.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
+
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+// https://mvnrepository.com/artifact/org.webjars/bootstrap
+implementation group: 'org.webjars', name: 'bootstrap', version: '4.5.0'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -25,6 +30,7 @@ dependencies {
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 	implementation group: 'org.sonarsource.scanner.gradle', name: 'sonarqube-gradle-plugin', version: '3.3'
+	
 }
 
 tasks.named('test') {
