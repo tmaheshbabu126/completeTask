@@ -30,43 +30,58 @@
 
 
 <div th:fragment="generate">
-	<div id="middlebox">
+	<div id="filefun">
 		<h4>Generate Output File:</h4>
 		<!-- 	<button type="button" class="btn btn-info">Generate</button> -->
 
 		<a href="/generate"> <input type="button" class="btn btn-info"
 			value="Generate" />
 		</a>
-		
-		<div  th:if="${generate}">
-		<br>
+
+		<div th:if="${generate}">
+			<br>
 			<h5 th:text="${generate}" />
-			
+
 		</div>
 
 	</div>
 </div>
 
 <div th:fragment="export">
-	<!-- <div id="rightbox">
-		<h4>Export Output:</h4>
-		<button type="button" class="btn btn-secondary" href="http://localhost:8080/download/{fileName:.+}"><a>Export</a></button>
 
-		<a href="/download/"> <input type="button"
-			class="btn btn-secondary" value="Export" />
-		</a>
 
-	</div> -->
-
-	<div id="rightbox">
+	<div id="filefun" style="width:70%">
 		<h4>Export Output File:</h4>
-		<form method="GET" th:action="@{/downloadFiles}">
-			<input type="file" name="files" id="file"
-				onchange="javascript:updateList()" multiple /> <br /> <br />
-			<button type="submit" class="btn btn-primary">Export</button>
+		<form method="GET" th:action="@{/downloadFiles}"
+			enctype="multipart/form-data">
+			<div style="float: left;width:35%">
+				<input type="file" name="files" id="file" class="form-control"
+					onchange="javascript:updateList()" multiple />
+
+			</div>
+
+
+			<div class="input-group mb-3" style="width:18%;float:left">
+
+				<select class="form-select" id="inputGroupSelect03" name="format"
+					aria-label="Example select with button addon">
+					<option selected>Choose Format...</option>
+					<option value=".txt">Text File</option>
+					<option value=".xls">xls File</option>
+					<option value=".xlsx">xlsx File</option>
+					<option value=".csv">csv File</option>
+					<option value=".pdf">Pdf File</option>
+				</select>
+			</div>
+			<div style="float: left;">
+				<button class="btn btn-outline-secondary btn btn-primary"
+					type="submit" style="font-weight: bold; color: black;">Export</button>
+			</div>
+			<!-- 	<button type="submit" class="btn btn-primary">Export</button> -->
+
 
 		</form>
-		
+
 		<!-- <div  th:if="${message}">
 			<h4 th:text="${message}" />
 		</div> -->

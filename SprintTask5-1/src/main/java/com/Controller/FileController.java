@@ -8,7 +8,10 @@ import java.nio.file.Paths;
 import java.security.Principal;
 
 import org.springframework.http.HttpHeaders;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.Entity.ExportFormats;
 import com.Entity.Users;
 import com.Repository.UserRepository;
 import com.Service.FileService;
@@ -42,7 +46,7 @@ public class FileController {
 
 
     @PostMapping("/uploadFiles")
-    public String uploadFiles(@RequestParam("files") MultipartFile[] files, RedirectAttributes redirectAttributes) {
+    public String uploadFiles(@RequestParam("files") MultipartFile[] files,  RedirectAttributes redirectAttributes) {
     	
         Arrays.asList(files)
             .stream()
@@ -62,20 +66,40 @@ public class FileController {
 	
     //added type resource
     @GetMapping("/downloadFiles")
-    public ResponseEntity<Resource> downloadFileFromLocal(@RequestParam("files") String files, RedirectAttributes redirectAttributes) {
+    public ResponseEntity<Resource> downloadFileFromLocal(@RequestParam("files") String files,@RequestParam("format") String format,Model model, RedirectAttributes redirectAttributes) {
     	System.out.println(files);
+        String str = files;
+        String[] arrOfStr = str.split("\\.");
+        		String fileName = arrOfStr[0];
+            System.out.println(fileName);
+    	System.out.println(format);
     	System.out.println("in file control");
     	Path path = Paths.get("C:\\Users\\mahes\\Desktop\\Task-CG-Asha\\task notes files\\" + files);
-    	Resource resource = null;
+    	
+		
+    	
+    	
+   
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+		
+    	Resource resource = null; 
     	try {
-    		resource = new UrlResource(path.toUri());
-    	} catch (MalformedURLException e) {
-    		e.printStackTrace();
-    	}
-    	return ResponseEntity.ok()
-    			.contentType(MediaType.parseMediaType("text/csv"))
-    			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-    			.body(resource);
+    		resource = new UrlResource(path.toUri()); 
+    		}
+    	catch (MalformedURLException e) {
+    		e.printStackTrace(); 
+    		}
+    	return
+    			ResponseEntity.ok() .contentType(MediaType.parseMediaType("text/csv"))
+    			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+    					resource.getFilename() + "\"") .body(resource);
+
     }
     
     

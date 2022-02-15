@@ -12,6 +12,7 @@ sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+	
 }
 
 dependencies {
@@ -30,6 +31,7 @@ implementation group: 'org.webjars', name: 'bootstrap', version: '4.5.0'
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 	implementation group: 'org.sonarsource.scanner.gradle', name: 'sonarqube-gradle-plugin', version: '3.3'
+	
 	
 }
 

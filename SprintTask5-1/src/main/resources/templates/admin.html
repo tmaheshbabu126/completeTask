@@ -12,7 +12,35 @@
 		}
 		output.innerHTML = '<ul>' + children + '</ul>';
 	}
+	
+
 </script>
+
+<script>
+        function fileValidation() {
+            var fileInput = 
+                document.getElementById('file');
+              console.log("in file change validation");
+            var filePath = fileInput.value;
+          
+            // Allowing file type
+            var allowedExtensions = 
+/(\.csv|\.html|\.pdf|\.slk|\.txt|\.xls|\.xlsx|\.prn)$/i;
+              
+            if (!allowedExtensions.exec(filePath)) {
+              //  alert('Invalid file type');
+                fileInput.value = '';
+                // Changing HTML to draw attention
+                error.innerHTML = "<span style='color: red;'>"+
+                            "Please enter a valid format mentioned above </span>"
+                return false;
+            } 
+            else{
+            	 error.innerHTML = ""
+            		 
+            }
+        }
+    </script>
 <link rel="stylesheet" href="" th:href="@{/css/styles.css}">
 
 
@@ -36,34 +64,37 @@
 
 	<div id="boxes">
 
-		<div id="leftbox">
-			<h4>Upload raw files:</h4>
+		<div id="filefun">
+		<h4>Upload raw files:</h4>
 
-			<!-- // previous form version -->
-			<form method="POST" th:action="@{/uploadFiles}"
-				enctype="multipart/form-data">
-				<div style="float: left">
-					<input type="file" name="files" id="file" class="form-control"
-						onchange="javascript:updateList()" multiple />
-				</div>
+		<!-- // previous form version -->
+		<form method="POST" th:action="@{/uploadFiles}"
+			enctype="multipart/form-data">
+			<div style="float: left">
 
-				<div style="float: left">
-					<button type="submit" class="btn btn-primary">Upload</button>
-				</div>
+				<input type="file" name="files" id="file" class="form-control"
+					onchange="javascript:updateList();return fileValidation() "
+					multiple accept=".csv,.html,.pdf,.slk,.txt,.xls,.xlsx,.prn" />
 
-				<!-- 	 <button type="submit">Submit</button> -->
-			</form>
-
-			<br> <br>
-
-			<p>Selected files:</p>
-
-
-			<div id="fileList"></div>
-			<div th:if="${upload}">
-				<h4 th:text="${upload}"></h4>
 			</div>
+
+			<div style="float: left">
+				<button type="submit" class="btn btn-primary">Upload</button>
+			</div>
+
+			<!-- 	 <button type="submit">Submit</button> -->
+		</form>
+
+		<br> <br> <label>only accepts
+			.csv,.html,.pdf,.slk,.txt,.xls,.xlsx,.prn</label> <br> <span id="error"></span>
+		<p>Selected files:</p>
+
+
+		<div id="fileList"></div>
+		<div th:if="${upload}">
+			<h4 th:text="${upload}"></h4>
 		</div>
+		 	</div> 
 
 
 
@@ -80,22 +111,7 @@
 
 
 
-		<!-- <div class="input-group mb-3">
 
-			<form method="POST" th:action="@{/uploadFiles}"
-				enctype="multipart/form-data">
-				<div style="float: left">
-					<button type="submit" class="input-group-text btn btn-primary"
-						for="inputGroupFile01">Upload</button>
-				</div>
-				<div style="float: left">
-					<input type="file" name="files" class="form-control"
-						id="inputGroupFile02 file" onchange="javascript:updateList()"
-						multiple />
-				</div>
-			</form>
-
-		</div> -->
 
 
 	</div>
@@ -107,10 +123,12 @@
 	<!-- 	<script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script> -->
 
 	<script th:inline="javascript">
-    var number = [[${number}]];
+   /*  var forma = [[${forma}]];
+    var formats = [[${formats}]];
+    var fileExtensionList = [[${fileExtensionList}]]; */
     var message = [[${message}]];
-    var message = [[${upload}]];
-    var message = [[${generate}]];
+    var upload = [[${upload}]];
+    var generate = [[${generate}]];
 
 </script>
 
@@ -128,8 +146,8 @@
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
 
-<script type="text/javascript" th:src="@{js/suggestions.js}"></script>
-<script type="text/javascript" th:src="@{js/script.js}"></script>
+	<!-- <script type="text/javascript" th:src="@{js/suggestions.js}"></script>
+	<script type="text/javascript" th:src="@{js/script.js}"></script> -->
 
 
 
