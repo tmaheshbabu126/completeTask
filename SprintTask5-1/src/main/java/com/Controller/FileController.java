@@ -66,7 +66,7 @@ public class FileController {
 	
     //added type resource
     @GetMapping("/downloadFiles")
-    public ResponseEntity<Resource> downloadFileFromLocal(@RequestParam("files") String files,@RequestParam("format") String format,Model model, RedirectAttributes redirectAttributes) {
+    public String downloadFileFromLocal(@RequestParam("files") String files,@RequestParam("format") String format,Model model, RedirectAttributes redirectAttributes) {
     	System.out.println(files);
         String str = files;
         String[] arrOfStr = str.split("\\.");
@@ -74,31 +74,47 @@ public class FileController {
             System.out.println(fileName);
     	System.out.println(format);
     	System.out.println("in file control");
-    	Path path = Paths.get("C:\\Users\\mahes\\Desktop\\Task-CG-Asha\\task notes files\\" + files);
     	
+    	String filePath = "C:\\Users\\mahes\\Desktop\\Task-CG-Asha\\Files\\Output File\\";
+    	//File myObj = new File(filePath+fileName+format);
+    	
+    	try {
+    		File myObj = new File(filePath+fileName+format);
+    		System.out.println(filePath+fileName+format);
+    	      if (myObj.createNewFile()) {
+    	        System.out.println("File created: " + myObj.getName());
+    	        redirectAttributes.addFlashAttribute("Export",
+        	            "The " + files+ "has been exported and saved as "+myObj.getName());
+    	      } else {
+    	        System.out.println("File already exists.");
+    	        redirectAttributes.addFlashAttribute("Export","File already exists.");
+    	      }
+    	    } catch (IOException e) {
+    	      System.out.println("An error occurred.");
+    	      e.printStackTrace();
+    	    }
+
+		/*
+		 * Path path =
+		 * Paths.get("C:\\Users\\mahes\\Desktop\\Task-CG-Asha\\task notes files\\" +
+		 * files);
+		 */
+    	//Path path = Paths.get(filePath + files);
 		
-    	
+    	 
     	
    
-    	
-    	
-    	
-    	
-    	
-    	
-    	
 		
-    	Resource resource = null; 
-    	try {
-    		resource = new UrlResource(path.toUri()); 
-    		}
-    	catch (MalformedURLException e) {
-    		e.printStackTrace(); 
-    		}
-    	return
-    			ResponseEntity.ok() .contentType(MediaType.parseMediaType("text/csv"))
-    			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
-    					resource.getFilename() + "\"") .body(resource);
+		
+		/*
+		 * Resource resource = null; try { resource = new UrlResource(path.toUri()); }
+		 * catch (MalformedURLException e) { e.printStackTrace(); } return
+		 * ResponseEntity.ok() .contentType(MediaType.parseMediaType("text/csv"))
+		 * .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+		 * resource.getFilename() + "\"") .body(resource);
+		 */
+    	
+    	return "redirect:/admin";
 
     }
     
