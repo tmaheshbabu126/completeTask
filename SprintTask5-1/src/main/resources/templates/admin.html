@@ -4,7 +4,8 @@
 <meta charset="ISO-8859-1">
 <script>
 	updateList = function() {
-		var input = document.getElementById('file');
+		var input = document.getElementById('files');
+		 console.log("in upload list");
 		var output = document.getElementById('fileList');
 		var children = "";
 		for (var i = 0; i < input.files.length; ++i) {
@@ -19,13 +20,15 @@
 <script>
         function fileValidation() {
             var fileInput = 
-                document.getElementById('file');
+                document.getElementById('files');
               console.log("in file change validation");
             var filePath = fileInput.value;
           
             // Allowing file type
             var allowedExtensions = 
 /(\.csv|\.html|\.pdf|\.slk|\.txt|\.xls|\.xlsx|\.prn)$/i;
+            
+         
               
             if (!allowedExtensions.exec(filePath)) {
               //  alert('Invalid file type');
@@ -72,8 +75,8 @@
 			enctype="multipart/form-data">
 			<div style="float: left">
 
-				<input type="file" name="files" id="file" class="form-control"
-					onchange="javascript:updateList();return fileValidation() "
+				<input type="file" name="files" id="files" class="form-control"
+					onchange=" javascript:updateList(); return fileValidation();"
 					multiple accept=".csv,.html,.pdf,.slk,.txt,.xls,.xlsx,.prn" />
 
 			</div>

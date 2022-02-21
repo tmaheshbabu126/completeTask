@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.security.Principal;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,22 +47,66 @@ public class FileController {
     private UserRepository userRepository;
 
 
-    @PostMapping("/uploadFiles")
-    public String uploadFiles(@RequestParam("files") MultipartFile[] files,  RedirectAttributes redirectAttributes) {
+	
+
+	@RequestMapping("/uploadFiles") public String uploadFiles(@RequestParam("files")
+    MultipartFile[] files, RedirectAttributes redirectAttributes) {
+
+
+
+    	List<String> fileNames = new ArrayList<>();
+    	Arrays.asList(files).stream().forEach(file -> {
+    		if(file.getOriginalFilename().toString() == null) {
+    			fileNames.clear();
+    		}
+    		else
+    		fileNames.add(file.getOriginalFilename());
+    	});
+
+
+    	System.out.println("files name is  = " + fileNames); 
+    	//System.out.println(files[1].toString());
     	
-        Arrays.asList(files)
-            .stream()
-            .forEach(file -> fileService.uploadFile(file));
+    	System.out.println("the condition is  blank= "+  fileNames.get(0).isBlank());
+    	//System.out.println("the condition is not null= "+ (fileNames.get(0).toString() != null));
 
-        redirectAttributes.addFlashAttribute("upload",
-            "You successfully uploaded all files!");
+    /*	if(fileNames.get(0).toString() != null &&  !fileNames.get(0).isBlank()) {
+    		
+    		System.out.println("files are not null");
+    		 System.out.println(files);
+    		Arrays.asList(files) .stream() .forEach(file ->
+    		fileService.uploadFile(file));
 
-        return "redirect:/admin";
+    		redirectAttributes.addFlashAttribute("upload",
+    				"You successfully uploaded all files!");
+    	}*/
+    	
+	if(!fileNames.get(0).isBlank()) {
+    		
+    		System.out.println("files are not null");
+    		 System.out.println(files);
+    		Arrays.asList(files) .stream() .forEach(file ->
+    		fileService.uploadFile(file));
+
+    		redirectAttributes.addFlashAttribute("upload",
+    				"You successfully uploaded all files!");
+    	}
+
+    	else { 
+    		System.out.println("files are null");
+    		System.out.println(files);
+    		redirectAttributes.addFlashAttribute("upload",
+    				"empty file is not accepted select files!");
+    	}
+
+    	return "redirect:/admin"; 
     }
-    
+	 
 	
 	
-	
+
+
+  
 	
     
 	
@@ -72,13 +118,24 @@ public class FileController {
         String[] arrOfStr = str.split("\\.");
         		String fileName = arrOfStr[0];
             System.out.println(fileName);
-    	System.out.println(format);
-    	System.out.println("in file control");
+           
+    	System.out.println("format of file is "+format);
+    	if(format.equals("Choose Format...")) {
+    		format = ".csv";
+    		
+    	}
+    	System.out.println("enhanced format is "+format);
+    	
+    	System.out.println("in file control"+fileName+format);
     	
     	String filePath = "C:\\Users\\mahes\\Desktop\\Task-CG-Asha\\Files\\Output File\\";
     	//File myObj = new File(filePath+fileName+format);
     	
+    	if(!fileName.isBlank()) {
     	try {
+    		System.out.println(fileName.isBlank());
+    		
+    		System.out.println(files);
     		File myObj = new File(filePath+fileName+format);
     		System.out.println(filePath+fileName+format);
     	      if (myObj.createNewFile()) {
@@ -93,6 +150,10 @@ public class FileController {
     	      System.out.println("An error occurred.");
     	      e.printStackTrace();
     	    }
+    	}
+   	else {
+    		 redirectAttributes.addFlashAttribute("Export","Please select any file");
+    	}
 
 		/*
 		 * Path path =
@@ -102,10 +163,6 @@ public class FileController {
     	//Path path = Paths.get(filePath + files);
 		
     	 
-    	
-   
-		
-		
 		/*
 		 * Resource resource = null; try { resource = new UrlResource(path.toUri()); }
 		 * catch (MalformedURLException e) { e.printStackTrace(); } return
@@ -114,7 +171,22 @@ public class FileController {
 		 * resource.getFilename() + "\"") .body(resource);
 		 */
     	
-    	return "redirect:/admin";
+    	 Object principal1 = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+ 		String username="";
+ 		if (principal1 instanceof UserDetails) {
+ 			username = ((UserDetails)principal1).getUsername();
+ 		} else {
+ 			username = principal1.toString();
+ 		}
+ 		model.addAttribute("uName", username);
+ 		System.out.println(username);
+ 		
+ 		Users user = userRepository.findByUsername(username);
+ 		String role = user.getRole();
+ 		role = role.toLowerCase();
+         
+         return "redirect:/"+role;
+//    	return "redirect:/admin";
 
     }
     

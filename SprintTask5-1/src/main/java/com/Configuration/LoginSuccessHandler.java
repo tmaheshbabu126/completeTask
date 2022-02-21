@@ -27,6 +27,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
        // Model model = null;
      //   model.addAttribute("uName", userDetails.getUsername()); 
         System.out.println(Role);
+        
          
         if (Role.equals("USER")) {
             redirectURL = "/user";
